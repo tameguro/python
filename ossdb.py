@@ -8,9 +8,9 @@ rq = requests.get(url_ossdb_sample_root + "/" + url_ossdb_sample)
 soup = BeautifulSoup(rq.content, 'html.parser')
 
 silver = soup.find(class_="silver_sample")
-aaa = silver.find_all("a")
+ataglist = silver.find_all("a")
 
-for atag in aaa:
+for atag in ataglist:
     txt = atag.text
     url = atag.get("href")
 
@@ -19,3 +19,6 @@ for atag in aaa:
         req = requests.get(url_ossdb_sample_root + "/" + url)
         sample_soup = BeautifulSoup(req.content, 'html.parser')
         print(sample_soup)
+
+def getUrlList:
+    return
