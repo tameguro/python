@@ -4,10 +4,7 @@ from bs4 import BeautifulSoup
 url_ossdb_sample_root = 'https://oss-db.jp'
 
 def main():
-
-    rq = requests.get(url_ossdb_sample_root + "/sample")
-    soup = BeautifulSoup(rq.content, 'lxml')
-
+    soup = getBeautifulSoup(url_ossdb_sample_root + "/sample")
     ataglist = soup.find_all("a", class_="size-s black")
 
     for atag in ataglist:
@@ -16,9 +13,7 @@ def main():
         getQuestionUrl(url)
 
 def getQuestionUrl(url):
-
-    rq = requests.get(url_ossdb_sample_root + url)
-    soup = BeautifulSoup(rq.content, 'lxml')
+    soup = getBeautifulSoup(url_ossdb_sample_root + url)
     ataglist = soup.find_all("a", class_="size-s black")
 
     for atag in ataglist:
@@ -26,15 +21,23 @@ def getQuestionUrl(url):
         getQuestionAndAnswer(url)
 
 def getQuestionAndAnswer(url):
-    print(url_ossdb_sample_root + url)
-    rq = requests.get(url_ossdb_sample_root + url)
-    soup = BeautifulSoup(rq.content, 'lxml')
-    question = soup.select(".question")
-    # 回答の選択肢の取得
-    answer = soup.select(".answer")
+    soup = getBeautifulSoup(url_ossdb_sample_root + url)
 
-    print(question)
-    print(answer)
+    question = soup.select("div.question > h4")
+    list = soup.select("div.upper-latin > ol")
+    kaisetsu = soup.select_one("div.answer > p")
+    answer = soup.find("strong")
+
+    print(url_ossdb_sample_root + url)
+    #print(question)
+    print(list)
+    print(kaisetsu)
+    #print(answer)
+
+def getBeautifulSoup(url):
+    rq = requests.get(url)
+    soup = BeautifulSoup(rq.content, 'lxml')
+    return soup
 
 # pythonコマンドで実行された場合にmain関数を呼び出す。これはモジュールとして他のファイルから
 # インポートされたときに、main関数が実行されないようにするための、Pythonにおける一般的なイディオム。
