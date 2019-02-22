@@ -1,3 +1,4 @@
+import time
 import requests
 from bs4 import BeautifulSoup
 
@@ -29,13 +30,14 @@ def getQuestionAndAnswer(url):
     answer = soup.find("strong")
 
     print(url_ossdb_sample_root + url)
-    #print(question)
+    print(question)
     print(list)
     print(kaisetsu)
-    #print(answer)
+    print(answer)
 
 def getBeautifulSoup(url):
     rq = requests.get(url)
+    time.sleep(5)
     soup = BeautifulSoup(rq.content, 'lxml')
     return soup
 
