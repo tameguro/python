@@ -117,8 +117,8 @@ def insertOrUpdateRecords(question_dict_list):
         question_dict['answer']
         question_dict['page_url']
 
-        record_question_group_mst = (exam_level_id, question_group_id, page_title, page_title)
-        cur.execute("INSERT INTO QUESTION_GROUP_MST VALUES (?,?,?) ON CONFLICT ON question_group_mst_pkey DO UPDATE SET question_group=?", record_question_group_mst)
+        record_question_group_mst = (exam_level_id, question_group_id, page_title, page_title, exam_level_id, question_group_id)
+        cur.execute("INSERT INTO QUESTION_GROUP_MST VALUES (?,?,?) ON CONFLICT ON CONSTRAINT question_group_mst_pkey DO UPDATE SET question_group=? WHERE exam_level_id=? and question_group_id=?", record_question_group_mst)
 
 
 
